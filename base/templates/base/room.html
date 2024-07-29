@@ -6,6 +6,9 @@
     <title>room</title>
 </head>
 <body>
-    <h1>room template</h1>
+    {% extends 'main.html' %}
+    {% block content %}
+    <h1>{{room.name}}</h1>
+    {% endblock %}
 </body>
 </html>
