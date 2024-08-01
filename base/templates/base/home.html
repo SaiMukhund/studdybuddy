@@ -5,28 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home</title>
 </head>
+<style>
+.home-container{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+</style>
 <body>
     {% extends 'main.html' %}
     {% block content %}
     <h1>Home Template</h1>
-    <div>
-        <div>
-            <a href="{% url 'createRoom' %}">Create Room</a>
-        </div>
-        <div>
-            {% for room in rooms %}
+    <div class="home-container">
+            <div class="browse">
+                <h4> Browse Topics</h4>
+                <hr>
                 <div>
-                    <a href="{% url 'updateRoom' room.id %}">Update room</a>
-                    <a href="{% url 'deleteRoom' room.id %}">DeleteRoom</a>
-                    <span>@{{room.host.username}}</span>
-                    <h5>{{room.id}}--<a href="{% url 'room' room.id %}">{{room.name}}</a></h5>
-                    <small>{{room.topic.name}}</small>
-                    <hr>
-
+                    <a href="{% url 'home' %}">All</a>
                 </div>
-            {% endfor %}
+                {% for topic in topics %}
+                <div>
+                    <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="home-room">
+                <div>
+                    <a href="{% url 'createRoom' %}">Create Room</a>
+                </div>
+                <div>
+                    {% for room in rooms %}
+                        <div>
+                            <a href="{% url 'updateRoom' room.id %}">Update room</a>
+                            <a href="{% url 'deleteRoom' room.id %}">DeleteRoom</a>
+                            <span>@{{room.host.username}}</span>
+                            <h5>{{room.id}}--<a href="{% url 'room' room.id %}">{{room.name}}</a></h5>
+                            <small>{{room.topic.name}}</small>
+                            <hr>
+        
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endblock %}
+            </div>
         </div>
-    </div>
-    {% endblock %}
+       
 </body>
 </html>
