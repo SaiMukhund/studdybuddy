@@ -1,3 +1,15 @@
 <a href="">
 LOGO
 </a>
+<div>
+    <a href="{% url 'login_page'%}">
+        Login
+    </a>
+</div>
+
+<div>
+    <form method="GET" action="{% url 'home' %}">
+        <input type="text" name="q" , placeholder="Search Rooms">
+
+    </form>
+</div>
