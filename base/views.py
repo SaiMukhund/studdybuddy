@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 from .models import Room ,Topic
 from .forms import RoomForm
+from django.contrib.auth.models import User
 
 def login_page(request):
     if request.method=="POST":
@@ -13,18 +14,23 @@ def login_page(request):
         password=request.POST.get("password")
 
         try:
-            user=User.obejcts.get(username=username)
+            user=User.objects.get(username=username)
         except:
             messages.error(request,"User not found" )
         
-        user=authenticate(username=username,password=password)
+        user=authenticate(request,username=username,password=password)
         if user is not None :
             login(request,user)
             return redirect('home')
         else:
-            message.error(request,"user or password doesnt match")
+            messages.error(request,"user or password doesnt match")
+    context={}
+    return render(request,'base/login_register.html',context)
 
-    return render(request,'base/login_register.html')
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+
 def home(request):
     q=request.GET.get('q',"")
     rooms=Room.objects.filter(
